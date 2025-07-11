@@ -29,7 +29,15 @@ def configure_agent():
         os.symlink(agent_dir, agent_target, target_is_directory=True)
 
 
+def configure_dep():
+    dep_dir = Path(__file__).parent.parent / "deps"
+    dep_target = Path(__file__).parent / "deps"
+    if not dep_target.exists():
+        os.symlink(dep_dir, dep_target, target_is_directory=True)
+
+
 if __name__ == "__main__":
+    configure_dep()
     configure_agent()
     configure_ocr_model()
 
