@@ -1,6 +1,7 @@
 from maa.agent.agent_server import AgentServer
 from maa.custom_action import CustomAction
 from maa.context import Context
+from utils import MsgBox
 import json, time
 
 
@@ -19,4 +20,15 @@ class MyCustomAction(CustomAction):
             if context.run_task(task, argv.get("pipeline_override", {})).status.failed:
                 return False
             time.sleep(1)
+        return True
+
+
+@AgentServer.custom_action("msgbox")
+class MyCustomAction(CustomAction):
+    def run(
+        self,
+        context: Context,
+        argv: CustomAction.RunArg,
+    ) -> bool:
+        MsgBox("User action needed")
         return True
