@@ -9,6 +9,7 @@ import my_reco
 
 def main():
     try:
+        subprocess.run(["adb", "shell", "cmd", "notification", "set_dnd", "alarms"])
         process = subprocess.Popen(
             ["scrcpy", "--no-window", "--no-audio", "--turn-screen-off"]
         )
@@ -27,6 +28,7 @@ def main():
         AgentServer.shut_down()
 
     finally:
+        subprocess.run(["adb", "shell", "cmd", "notification", "set_dnd", "off"])
         if process and process.poll() is None:
             print(
                 f"Cleaning up: Terminating background process (PID: {process.pid})..."
