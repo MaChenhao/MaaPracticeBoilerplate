@@ -7,12 +7,43 @@ import my_action
 import my_reco
 
 
+def get_wifi_name():
+    """Gets the WiFi SSID in both Windows and MacOS."""
+    try:
+        if sys.platform == "darwin":  # macOS
+            process = subprocess.check_output(
+                [
+                    "/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport",
+                    "-I",
+                ],
+                text=True,
+            )
+            for line in process.strip().split("\n"):
+                if "SSID" in line:
+                    ssid = line.split(": ")[1]
+                    return ssid
+        elif sys.platform == "win32":  # Windows
+            process = subprocess.check_output(
+                ["netsh", "wlan", "show", "interfaces"], text=True
+            )
+            for line in process.split("\n"):
+                if "SSID" in line and ":" in line:
+                    ssid = line.split(":")[1].strip()
+                    if ssid:
+                        return ssid
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return None
+    return None
+
+
 def main():
     try:
         subprocess.run(["adb", "shell", "cmd", "notification", "set_dnd", "alarms"])
-        process = subprocess.Popen(
-            ["scrcpy", "--no-window", "--no-audio", "--turn-screen-off"]
-        )
+        process = None
+        if get_wifi_name().starswith("Google"):
+            process = subprocess.Popen(
+                ["scrcpy", "--no-window", "--no-audio", "--turn-screen-off"]
+            )
 
         Toolkit.init_option("./")
 
