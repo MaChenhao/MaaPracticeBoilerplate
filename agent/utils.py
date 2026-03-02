@@ -3,7 +3,7 @@ import platform, subprocess
 
 def MsgBox(msg):
     if platform.system() == "Darwin":
-        subprocess.run(["osascript", "-e", f'display dialog "{msg}"'])
+        subprocess.run(["osascript", "-e", f'display alert "{msg}"'])
     else:
         subprocess.run(
             [
