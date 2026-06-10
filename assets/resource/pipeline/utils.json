@@ -1,0 +1,27 @@
+{
+    "back": {
+        "action": "ClickKey",
+        "key": 4,
+        "post_delay": 3000,
+        "next": []
+    },
+    "StopTask": {
+        "next": "UserActionMsgBox"
+    },
+    "UserActionMsgBoxError": {
+        "next": [
+            "UserActionMsgBox"
+        ]
+    },
+    "UserActionMsgBox": {
+        "action": "Custom",
+        "custom_action": "msgbox",
+        "next": [
+            "StopTaskAction"
+        ]
+    },
+    "StopTaskAction": {
+        "action": "StopTask"
+    },
+    "end": {}
+}
