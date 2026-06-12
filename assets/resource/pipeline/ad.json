@@ -1,0 +1,47 @@
+{
+    "testad": {
+        "recognition": "OCR",
+        "expected": "test ad",
+        "timeout": 60000,
+        "rate_limit": 10000,
+        "next": [
+            "GooglePlay"
+        ]
+    },
+    "GooglePlay": {
+        "recognition": "OCR",
+        "expected": "Google Play",
+        "action": "Click",
+        "on_error": [
+            "GooglePlay"
+        ],
+        "next": [
+            "PrivacyManage"
+        ]
+    },
+    "PrivacyManage": {
+        "recognition": "OCR",
+        "expected": "Privacy Manage",
+        "action": "ClickKey",
+        "key": 4,
+        "repeat": 2,
+        "repeat_delay": 1000,
+        "next": [
+            "adx"
+        ]
+    },
+    "adx": {
+        "recognition": "TemplateMatch",
+        "template": "adx.png",
+        "roi": [
+            753,
+            2,
+            325,
+            360
+        ],
+        "threshold": 0.9,
+        "action": "Click",
+        "next": []
+    },
+    "endad": {}
+}
